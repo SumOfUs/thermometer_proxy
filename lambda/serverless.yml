@@ -1,0 +1,17 @@
+service: thermometer
+
+provider:
+  deploymentBucket:
+    name: sumofus.org.serverless-services
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    API_HOST: ${opt:api_host, 'https://action-staging.sumofus.org'}
+functions:
+  thermometer:
+    handler: handler.get
+
+    events:
+      - http:
+          path: thermometer
+          method: get

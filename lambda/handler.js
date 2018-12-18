@@ -44,7 +44,6 @@ module.exports.get = async (event) => {
   };
 
   let url = `https://thermometer.forwardaction.uk/?${qs.stringify(options)}`
-  console.log("URL: ", url);
 
   return {
     statusCode: 302,

@@ -17,11 +17,12 @@ const fetchDonationData = (pageId, currency) => {
 };
 
 module.exports.get = async (event) => {
-  const { page_id, label, goal, currency } = event.queryStringParameters;
+  const { page_id, label, currency } = event.queryStringParameters;
 
   const data = await fetchDonationData(page_id, currency);
   // Construct total amount from cents into full amounts:
   const total_donations = (parseFloat(data.total_donations, 10) + parseFloat(data.offset, 10)) / 100;
+  const goal = parseFloat(data.fundraising_goal, 10) / 100;
 
   const textColour = '30394f';
   const labelColour = '30394f';

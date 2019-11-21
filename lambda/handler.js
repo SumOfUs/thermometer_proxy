@@ -3,36 +3,34 @@
 const request = require('request');
 const qs = require('query-string');
 
-const fetchDonationData = (pageId, currency) => {
+const fetchDonationData = () => {
   const host = process.env.API_HOST;
 
   return new Promise(resolve => {
     request(
-      `${host}/api/pages/${pageId}/total_donations?currency=${currency}`,
-      {json: true}, ( err, resp, body ) => {
-        resolve(body);
-      }
+        `${host}/api/donations/total`,
+        { start: '2019-11-01', end: '2019-11-30' }, ( err, resp, body ) => {
+          resolve(body);
+        }
     )
   })
 };
 
 module.exports.get = async (event) => {
-  const { page_id, label, currency } = event.queryStringParameters;
+  const { label, currency } = event.queryStringParameters;
 
-  const data = await fetchDonationData(page_id, currency);
-  // Construct total amount from cents into full amounts:
-  const total_donations = (parseFloat(data.total_donations, 10) + parseFloat(data.offset, 10)) / 100;
-  const goal = parseFloat(data.fundraising_goal, 10) / 100;
+  const data = await fetchDonationData();
+  const donations_data = JSON.parse(data).data;
 
   const textColour = '30394f';
   const labelColour = '30394f';
   const topRight = 'Goal';
 
   const options = {
-    contributed: total_donations,
+    contributed: donations_data.total_donations[currency],
     top_left: label,
     top_right: topRight,
-    goal: goal,
+    goal: donations_data.eoy_goals[currency],
     barcolour: '00c0cf',
     transbg: true,
     textcolour: textColour,

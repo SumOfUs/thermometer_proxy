@@ -5,4 +5,4 @@ jspm_packages
 .idea
 
 # Serverless directories
-.serverless
+.serverlessyarn

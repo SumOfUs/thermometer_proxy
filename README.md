@@ -1,4 +1,4 @@
-# thermometer_proxy
+# Nov 2019 - Deprecated in favor of https://github.com/SumOfUs/sls-services/tree/master/packages/sls-donations-thermometer-image
 
 This is a service running on AWS Lambda and API Gateway to construct progress thermometers for SumOfUs's end of year fundraising.
 It fetches EOY fundraising progress data from Champaign and displays it in a thermometer using an image construction service
